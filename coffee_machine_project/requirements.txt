@@ -1,0 +1,51 @@
+Three flavors ☕
+1. Esoresso ($ 1.50)
+    50 ml water
+    18 g coffee
+
+2. Latte ($ 2.50)
+    200 ml water
+    24 g coffee
+    150 ml Milk
+
+3. Cappuccino ($ 3.00)
+    250 ml water
+    24 g coffee
+    100 ml Milk
+
+Resources of coffee machine:
+    300 ml water
+    200 ml Milk
+    100 g coffee
+
+Coin operated -- feature
+    four types of coins are allowed
+        1. penny ($ 0.01)
+        2. Nickel ($ 0.05)
+        3. Dime ($0.10)
+        4. Quarter ($ 0.25)
+
+*** Program requirements:
+1. Print report
+    > Provide resources available in coffee machine information
+        1. water : ?
+        2. Milk : ?
+        3. Coffee: ?
+        4. Money : 
+2. Check Resource sufficient ? 
+    > When User orders coffee check if resources are available for making coffee
+    > If resources are not available (Sorry and print which resource is not available)
+
+3. Process Coins.   
+    > When user orders coffee ask insert coins statement
+        > How many Quarters: 
+        > How many Dimes:
+        > How many Nickels: 
+        > How many pennies: 
+4. <> Check if  Money is enough ? 
+        -- if not Sorry not enough money and money refunded
+        -- if sufficient money Provide and provide coffee and spare change.
+5. make coffee:
+    > if enough change provided
+    > deduct the resources
+    > Add money to resources 
