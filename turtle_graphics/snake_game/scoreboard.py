@@ -9,16 +9,26 @@ class Scoreboard(Turtle):
         self.goto(0,270)
         self.hideturtle()
         self.score = 0
-        self.high_score = 0
+        self.high_score = self.updated_high_score()
         self.update_scoreboard()
     
     def update_scoreboard(self):
         self.clear()
         self.write(arg= f"Your Score: {self.score} High Score: {self.high_score}", move=False ,align=ALIGNMENT,font=FONT)
+    
+    def high_score_update(self,val):
+        with open(r"C:\Python\turtle_graphics\snake_game\data\data.txt", mode="w") as file:
+            file.write(val)
+    def updated_high_score(self):
+        with open(r"C:\Python\turtle_graphics\snake_game\data\data.txt", mode="r") as file:
+            val = file.read()
+            return int(val)
+        
 
     def reset(self):
         if self.score > self.high_score:
-            self.high_score = self.score
+            self.high_score_update(val=str(self.score))
+            self.high_score = self.updated_high_score()
         self.score = 0
         self.update_scoreboard()
     # def game_over(self):
@@ -31,7 +41,8 @@ class Scoreboard(Turtle):
         
         
 
-        
+
+    
 
         
             
