@@ -34,9 +34,7 @@ class States:
         
     def remaining_states(self):
         self.all_states = self.df1["state"]
-        for state in list(self.all_states):
-            if state not in self.correct_guesses:
-                self.missing_states.append(state)
+        self.missing_states = [state for state in list(self.all_states) if state not in self.correct_guesses]
         return self.missing_states
         
 
