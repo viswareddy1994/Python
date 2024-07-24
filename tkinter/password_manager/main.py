@@ -4,6 +4,7 @@ import random
 import os
 import pyperclip
 import string
+import json
 
 # -----------------------------CONSTANTS------------------------------------------#
 FONT_NAME = "Arial"
@@ -11,7 +12,9 @@ FONT_NAME = "Arial"
 # -----------------------------PATH-----------------------------------------------#
 script_dir = os.path.dirname(__file__)
 image_path = os.path.join(script_dir, "logo.png")
-file_path = os.path.join(script_dir, "password_data.txt")
+# file_path = os.path.join(script_dir, "password_data.txt")
+file_path = os.path.join(script_dir, "password_data.json")
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Password Generator Project
@@ -50,18 +53,50 @@ def save():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
+    new_data = {website: {
+        "email": email,
+        "password": password,
+    }
+    }
     if len(website) == 0 or len(password) == 0 or len(email) == 0:
         messagebox.showwarning(
             title="Oops", message=f"Please dont leave any fields empty!")
     else:
-        is_ok = messagebox.askokcancel(
-            title=website, message=f"These are the details entered: \nEmail: {email}\nPassword: {password}\nIs it OK to Save?")
-        if is_ok:
-            with open(file_path, mode="a") as file:
-                file.write(f"\n{website} | {email} | {password}\n")
+        try:
+            with open(file_path, mode="r") as file:
+                #reading old data
+                data = json.load(file)
+        except FileNotFoundError:
+            with open(file_path,mode="w") as file:
+                #Saving updated data
+                json.dump(new_data,file,indent=4)
+        else:
+            #Updating with new data 
+            data.update(new_data)
+            with open(file_path,mode="w") as file:
+                #Saving updated data
+                json.dump(data,file,indent=4)  
+        finally:         
+            messagebox.showinfo(title="Success",message=f"added {website} credentials to the Data store")
             clear_entries()
-
-
+# ---------------------------- FIND PASSWORD -------------------------- #
+def find_password():
+    website = website_entry.get()
+    try:
+        with open(file_path, mode="r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showerror(title="Error",message="No Data file found")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=f"{website}",message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showerror(title="Error",message=f"No details for {website} exists.")           
+    finally:
+        website_entry.delete(0, END)
+        website_entry.focus()
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password manager")
@@ -84,9 +119,9 @@ password_label = Label(text="Password:", font=(FONT_NAME, 10), anchor="w")
 password_label.grid(row=3, column=0, sticky="we")
 
 # Entries
-website_entry = Entry(width=35)
+website_entry = Entry(width=21)
 website_entry.focus()
-website_entry.grid(row=1, column=1, columnspan=2, sticky="we")
+website_entry.grid(row=1, column=1, sticky="we")
 
 email_entry = Entry(width=35)
 email_entry.insert(0, "vreddy.a3@gmail.com")
@@ -101,5 +136,8 @@ generate_password_button.grid(row=3, column=2, sticky="we")
 
 add_button = Button(text="add", width=44, command=save)
 add_button.grid(row=4, column=1, columnspan=2, sticky="we")
+
+search_button = Button(text="Search",command=find_password)
+search_button.grid(row=1, column=2, sticky="we")
 
 window.mainloop()
