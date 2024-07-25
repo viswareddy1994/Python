@@ -7,11 +7,7 @@ import json
 class LetterGenerator:
     def __init__(self):
         script_dir = os.path.dirname(__file__)
-        self.letter_paths = [
-            os.path.join(script_dir, "../letter_templates/letter_1.txt"),
-            os.path.join(script_dir, "../letter_templates/letter_2.txt"),
-            os.path.join(script_dir, "../letter_templates/letter_3.txt")
-        ]
+        self.letter_path = os.path.join(script_dir, f"../letter_templates/letter_{random.randint(1,3)}.txt")
         self.config = self.load_config()
         self.email_address = self.config["EMAIL_ADDRESS"]
         self.email_password = self.config["EMAIL_PASSWORD"]
@@ -21,8 +17,7 @@ class LetterGenerator:
             return json.load(config_file)
 
     def generate_letter(self, recipient_name):
-        random_letter_path = random.choice(self.letter_paths)
-        with open(random_letter_path, mode="r") as file:
+        with open(self.letter_path, mode="r") as file:
             letter_content = file.read()
             return letter_content.replace("[NAME]", recipient_name)
 
