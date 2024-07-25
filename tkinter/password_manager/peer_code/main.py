@@ -146,15 +146,15 @@ def save():
                                                               f"\nPassword: {password} \nIs it ok to save?")
         if is_ok:
             try:
-                with open("data.json", "r") as data_file:
+                with open(r"tkinter\password_manager\peer_code\data.json", "r") as data_file:
                     data = json.load(data_file)
                     data.update(new_data)
             except FileNotFoundError or json.decoder.JSONDecodeError:
-                with open("data.json", 'w') as data_file:
+                with open(r"tkinter\password_manager\peer_code\data.json", 'w') as data_file:
                     json.dump(new_data, data_file, indent=4)
                 pass
             else:
-                with open("data.json", 'w') as data_file:
+                with open(r"tkinter\password_manager\peer_code\data.json", 'w') as data_file:
                     json.dump(data, data_file, indent=4)
             finally:
                 website_entry.delete(0, END)
@@ -163,7 +163,7 @@ def save():
  
 def put_default():
     try:
-        with open("data.json") as file:
+        with open(r"tkinter\password_manager\peer_code\data.json") as file:
             data = json.load(file)
             if len(data) != 0:
                 for website in data:
@@ -179,7 +179,7 @@ def search():
     website = website_entry.get()
     if len(website) != 0:
         try:
-            with open("data.json") as file:
+            with open(r"tkinter\password_manager\peer_code\data.json") as file:
                 data = json.load(file)
             password = data[website]["password"]
             email = data[website]["email"]
@@ -209,7 +209,7 @@ def format_data(new_window):
     pas_y = 30
     pass_btn_width = 0
     try:
-        with open("data.json") as file:
+        with open(r"tkinter\password_manager\peer_code\data.json") as file:
             data = json.load(file)
     except json.decoder.JSONDecodeError or FileNotFoundError:
         if_no = Label(new_window, text="No Saved Data or Passwords found\nAdd Passwords to view them.", bg="light blue")
