@@ -12,6 +12,7 @@ script_dir = os.path.dirname(__file__)
 
 # Define the relative path to the image
 image_path = os.path.join(script_dir, "blank_states_img.gif")
+csv_path = os.path.join(script_dir,"states_to_learn.csv")
 
 # Check if the file exists
 if not os.path.exists(image_path):
@@ -37,7 +38,7 @@ while keep_guessing:
     # Check if user cancels the input dialog
     if answer_state is None or  answer_state.lower() == "exit":
         new_data = pd.DataFrame(state.remaining_states(),columns=["State"])
-        new_data.to_csv("C:\Python\day_25_us_states_game\states_to_learn.csv", index=False)
+        new_data.to_csv(csv_path, index=False)
         break
     
     answer_state = answer_state.title()
