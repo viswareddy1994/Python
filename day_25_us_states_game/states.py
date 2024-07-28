@@ -1,9 +1,12 @@
 from turtle import Turtle
 import pandas as pd
+import os
+script_dir = os.path.dirname(__file__)
+file_path = os.path.join(script_dir,"50_states.csv")
 
 class States:
     def __init__(self):
-        self.path = r"C:\Python\day_25_us_states_game\50_states.csv"
+        self.path = file_path
         self.correct_guesses = []
         self.missing_states = []
         self._score = 0  # Use a different name for the instance variable
