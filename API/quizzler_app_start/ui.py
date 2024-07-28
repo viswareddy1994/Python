@@ -3,9 +3,11 @@ import os
 from quiz_brain import QuizBrain
 
 THEME_COLOR = "#375362"
+script_dir = os.path.dirname(__file__)
 
-false_image_path = r"API\quizzler_app_start\images\false.png"
-true_image_path = r"API\quizzler_app_start\images\true.png"
+
+false_image_path = os.path.join(script_dir,"images","false.png")
+true_image_path = os.path.join(script_dir,"images","true.png")
 
 
 class QuizInterface:
@@ -25,8 +27,8 @@ class QuizInterface:
         self.q_text = self.canvas.create_text(150,125,width=280,text="Viswa",fill="black",font=("Arial",20,"italic"))
         self.canvas.grid(row=1,column=0,columnspan=2,pady=50)
 
-        true_image = PhotoImage(file=r"API\quizzler_app_start\images\true.png")
-        false_image = PhotoImage(file=r"API\quizzler_app_start\images\false.png")
+        true_image = PhotoImage(file=true_image_path)
+        false_image = PhotoImage(file=false_image_path)
         self.false_button = Button(image=false_image,highlightthickness=0,command=self.false_answer)
         self.false_button.grid(row=2,column=0)
         
